@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — LogixCanvas</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --dark-bg: #0b0b0f; --dark-bg-subtle: #13131a; --dark-surface: #1a1a24;
+  --dark-border: rgba(255,255,255,0.06); --dark-text: #f0ede6; --dark-text-secondary: #9590a0;
+  --light-bg: #faf8f4; --light-bg-alt: #f2efe8; --light-surface: #ffffff;
+  --light-border: rgba(0,0,0,0.06); --light-text: #1a1a24; --light-text-secondary: #6b6577;
+  --accent: #4f46e5; --accent-light: #6366f1; --accent-soft: rgba(79,70,229,0.08);
+  --accent-soft-dark: rgba(99,102,241,0.15); --accent-glow: rgba(79,70,229,0.25);
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-body); background: var(--light-bg); color: var(--light-text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--accent); color: white; }
+::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: var(--light-bg); } ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.4rem 4rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.4s var(--ease-smooth); }
+nav.scrolled { background: rgba(11,11,15,0.92); backdrop-filter: blur(24px); padding: 0.9rem 4rem; border-bottom: 1px solid var(--dark-border); }
+nav.light-mode { background: rgba(250,248,244,0.92); backdrop-filter: blur(24px); border-bottom: 1px solid var(--light-border); }
+nav.light-mode .nav-logo { color: var(--light-text); } nav.light-mode .nav-links a { color: var(--light-text-secondary); } nav.light-mode .nav-links a:hover { color: var(--accent); } nav.light-mode .menu-toggle span { background: var(--light-text); }
+.nav-logo { font-family: var(--font-display); font-size: 1.7rem; color: var(--dark-text); text-decoration: none; transition: color 0.3s; } .nav-logo span { color: var(--accent-light); }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-links a { color: var(--dark-text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.3s; } .nav-links a:hover { color: var(--accent-light); }
+.nav-cta { background: var(--accent) !important; color: white !important; padding: 0.65rem 1.6rem; border-radius: 10px; font-weight: 600 !important; transition: all 0.3s var(--ease-out) !important; } .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 30px var(--accent-glow); background: var(--accent-light) !important; }
+.menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; background: none; border: none; padding: 5px; } .menu-toggle span { width: 26px; height: 2px; background: var(--dark-text); transition: all 0.3s; display: block; }
+
+.page-hero { padding: 10rem 4rem 5rem; background: var(--dark-bg); color: var(--dark-text); position: relative; overflow: hidden; }
+.page-hero-gradient { position: absolute; width: 400px; height: 400px; border-radius: 50%; filter: blur(140px); opacity: 0.15; }
+.page-hero-gradient-1 { background: var(--accent); top: -10%; right: 20%; } .page-hero-gradient-2 { background: #ec4899; bottom: -20%; left: 10%; }
+.page-hero-dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 32px 32px; }
+.page-hero-content { position: relative; z-index: 2; max-width: 700px; }
+.page-hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 1rem; font-weight: 500; } .page-hero-tag::before { content: ''; width: 24px; height: 2px; background: var(--accent-light); }
+.page-hero h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 400; line-height: 1.1; margin-bottom: 1.2rem; } .page-hero h1 em { font-style: italic; color: var(--accent-light); }
+.page-hero p { font-size: 1.05rem; line-height: 1.75; color: var(--dark-text-secondary); font-weight: 300; max-width: 550px; }
+
+.transition-zone { height: 100px; background: linear-gradient(to bottom, var(--dark-bg) 0%, var(--light-bg) 100%); }
+.light-to-dark { height: 100px; background: linear-gradient(to bottom, var(--light-bg) 0%, var(--dark-bg) 100%); }
+.section { padding: 6rem 4rem; } .section-alt { background: var(--light-bg-alt); }
+.section-tag { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; font-weight: 500; } .section-tag::before { content: ''; width: 24px; height: 2px; background: var(--accent); }
+.section-title { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 400; line-height: 1.12; margin-bottom: 1rem; } .section-title em { font-style: italic; color: var(--accent); }
+
+/* CONTACT LAYOUT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; }
+
+/* FORM */
+.contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label { font-size: 0.78rem; font-weight: 600; color: var(--light-text); letter-spacing: 0.03em; }
+.form-group input, .form-group textarea, .form-group select {
+  padding: 0.85rem 1rem; border-radius: 12px; border: 1px solid var(--light-border); background: var(--light-surface);
+  font-family: var(--font-body); font-size: 0.88rem; color: var(--light-text); outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--light-text-secondary); font-weight: 300; }
+.form-group textarea { resize: vertical; min-height: 140px; }
+.form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236b6577' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; }
+.btn-submit { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background: var(--accent); color: white; padding: 1rem 2rem; border-radius: 12px; font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer; transition: all 0.3s var(--ease-out); width: 100%; }
+.btn-submit:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 12px 40px var(--accent-glow); }
+.form-note { font-size: 0.75rem; color: var(--light-text-secondary); text-align: center; font-weight: 300; }
+
+/* CONTACT INFO SIDEBAR */
+.contact-info { display: flex; flex-direction: column; gap: 2rem; }
+.info-card { background: var(--light-surface); border: 1px solid var(--light-border); border-radius: 16px; padding: 1.8rem; transition: all 0.3s var(--ease-out); }
+.info-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.05); }
+.info-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+.info-card h3 { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 0.3rem; }
+.info-card p { color: var(--light-text-secondary); font-size: 0.86rem; line-height: 1.6; font-weight: 300; }
+.info-card a { color: var(--accent); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+.info-card a:hover { color: var(--accent-light); }
+
+.response-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.15); padding: 0.6rem 1rem; border-radius: 12px; margin-top: 0.5rem; }
+.response-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+.response-badge span { font-size: 0.78rem; color: #166534; font-weight: 500; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 3rem; max-width: 800px; }
+.faq-item { background: var(--light-surface); border: 1px solid var(--light-border); border-radius: 14px; overflow: hidden; transition: all 0.3s; }
+.faq-item.active { border-color: var(--accent); box-shadow: 0 4px 20px var(--accent-soft); }
+.faq-question { padding: 1.3rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; font-size: 0.92rem; user-select: none; }
+.faq-question:hover { color: var(--accent); }
+.faq-toggle { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--accent); transition: all 0.3s; flex-shrink: 0; }
+.faq-item.active .faq-toggle { background: var(--accent); color: white; transform: rotate(45deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease-out), padding 0.3s; }
+.faq-item.active .faq-answer { max-height: 300px; }
+.faq-answer-inner { padding: 0 1.5rem 1.3rem; color: var(--light-text-secondary); font-size: 0.88rem; line-height: 1.7; font-weight: 300; }
+
+/* FOOTER */
+footer { background: var(--dark-bg); color: var(--dark-text); padding: 4rem 4rem 2rem; border-top: 1px solid var(--dark-border); }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3.5rem; }
+.footer-brand-desc { color: var(--dark-text-secondary); font-size: 0.86rem; line-height: 1.7; margin-top: 1rem; max-width: 300px; font-weight: 300; }
+.footer-col h4 { font-family: var(--font-display); font-size: 0.95rem; margin-bottom: 1rem; }
+.footer-col a { display: block; color: var(--dark-text-secondary); text-decoration: none; font-size: 0.83rem; padding: 0.25rem 0; transition: color 0.3s; font-weight: 300; } .footer-col a:hover { color: var(--accent-light); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 2rem; border-top: 1px solid var(--dark-border); }
+.footer-bottom p { font-size: 0.75rem; color: var(--dark-text-secondary); }
+.footer-socials { display: flex; gap: 0.8rem; }
+.footer-socials a { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--dark-border); display: flex; align-items: center; justify-content: center; color: var(--dark-text-secondary); text-decoration: none; font-size: 0.75rem; transition: all 0.3s; font-weight: 500; }
+.footer-socials a:hover { border-color: var(--accent-light); color: var(--accent-light); background: var(--accent-soft-dark); }
+
+.reveal { opacity: 0; transform: translateY(35px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; } .reveal-d2 { transition-delay: 0.2s; } .reveal-d3 { transition-delay: 0.3s; }
+
+@media (max-width: 1024px) { .page-hero, .section, nav, footer { padding-left: 2.5rem; padding-right: 2.5rem; } nav.scrolled, nav.light-mode { padding-left: 2.5rem; padding-right: 2.5rem; } .contact-grid { gap: 2.5rem; } .footer-top { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) { .page-hero, .section, footer { padding-left: 1.5rem; padding-right: 1.5rem; } nav { padding: 1rem 1.5rem; } nav.scrolled, nav.light-mode { padding: 0.8rem 1.5rem; }
+  .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,11,15,0.97); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; z-index: 999; } .nav-links.open { display: flex; } .nav-links a { font-size: 1.1rem; color: var(--dark-text-secondary) !important; }
+  .menu-toggle { display: flex; z-index: 1001; } .menu-toggle.open span { background: var(--dark-text) !important; } .menu-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); } .menu-toggle.open span:nth-child(2) { opacity: 0; } .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+  .contact-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; } .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; } .transition-zone, .light-to-dark { height: 60px; } }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Logix<span>Canvas</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#portfolio">Portfolio</a>
+    <a href="index.html#process">Process</a>
+    <a href="about.html">About</a>
+    <a href="contact.html" class="nav-cta">Start a Project</a>
+  </div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-gradient page-hero-gradient-1"></div>
+  <div class="page-hero-gradient page-hero-gradient-2"></div>
+  <div class="page-hero-dots"></div>
+  <div class="page-hero-content">
+    <div class="page-hero-tag">Contact</div>
+    <h1>Let's Start a<br><em>Conversation</em></h1>
+    <p>Have a project in mind? Need a technical partner? Or just want to say hello? We'd love to hear from you.</p>
+  </div>
+</section>
+
+<div class="transition-zone"></div>
+
+<!-- CONTACT FORM + INFO -->
+<section class="section">
+  <div class="contact-grid">
+    <!-- FORM -->
+    <div class="reveal">
+      <div class="section-tag">Send a Message</div>
+      <h2 class="section-title">Tell Us About Your <em>Project</em></h2>
+      <form class="contact-form" id="contactForm" style="margin-top: 2rem;">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="john@company.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" placeholder="Company name (optional)">
+          </div>
+          <div class="form-group">
+            <label for="budget">Budget Range</label>
+            <select id="budget">
+              <option value="">Select a range</option>
+              <option value="5-15">₹5L – ₹15L</option>
+              <option value="15-30">₹15L – ₹30L</option>
+              <option value="30-50">₹30L – ₹50L</option>
+              <option value="50+">₹50L+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="service">What Do You Need?</label>
+          <select id="service">
+            <option value="">Select a service</option>
+            <option value="mobile">Mobile App Development</option>
+            <option value="web">Web Application</option>
+            <option value="design">UI/UX Design</option>
+            <option value="backend">Backend & APIs</option>
+            <option value="ecommerce">E-Commerce</option>
+            <option value="devops">DevOps & Cloud</option>
+            <option value="other">Other / Not Sure</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Project Details</label>
+          <textarea id="message" placeholder="Describe your project, goals, and timeline..." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn">
+          Send Message
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </button>
+        <p class="form-note">We'll get back to you within 24 hours. No spam, ever.</p>
+      </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="contact-info reveal reveal-d2">
+      <div class="info-card">
+        <div class="info-icon">📧</div>
+        <h3>Email Us</h3>
+        <p>For project inquiries and proposals</p>
+        <a href="mailto:hello@logixcanvas.com">hello@logixcanvas.com</a>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📞</div>
+        <h3>Call Us</h3>
+        <p>Mon – Fri, 10 AM – 7 PM IST</p>
+        <a href="tel:+919876543210">+91 98765 43210</a>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📍</div>
+        <h3>Visit Us</h3>
+        <p>LogixCanvas HQ<br>WeWork, Connaught Place<br>New Delhi, India 110001</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">💬</div>
+        <h3>Follow Us</h3>
+        <p>
+          <a href="#">LinkedIn</a> &nbsp;·&nbsp;
+          <a href="#">GitHub</a> &nbsp;·&nbsp;
+          <a href="#">Dribbble</a> &nbsp;·&nbsp;
+          <a href="#">Twitter/X</a>
+        </p>
+      </div>
+      <div class="response-badge">
+        <div class="response-dot"></div>
+        <span>Average response time: under 4 hours</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-alt">
+  <div class="reveal">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">Frequently Asked <em>Questions</em></h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal reveal-d1">
+      <div class="faq-question">How long does a typical project take?<div class="faq-toggle">+</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">It depends on scope. An MVP typically takes 6–10 weeks, while a full-featured product with backend, mobile apps, and web dashboard can take 3–5 months. We'll give you a detailed timeline during our discovery phase.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d2">
+      <div class="faq-question">What's your tech stack?<div class="faq-toggle">+</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">We specialize in React, Next.js, Angular for web; React Native and Flutter for mobile; Django, FastAPI, Node.js for backend; PostgreSQL, Redis for databases; and AWS, Docker, Kubernetes for infrastructure. We choose based on what fits your project best.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d3">
+      <div class="faq-question">Do you work with startups or only enterprises?<div class="faq-toggle">+</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Both! We love working with early-stage startups building their first MVP as much as we enjoy scaling products for established businesses. Our process adapts to your stage and budget.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d1">
+      <div class="faq-question">How do you handle communication and updates?<div class="faq-toggle">+</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">We use Slack for daily communication, run weekly demo calls to show progress, and share a real-time project board (Linear or Jira). You'll always know exactly where things stand.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d2">
+      <div class="faq-question">Do you offer post-launch support?<div class="faq-toggle">+</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Every project includes 30 days of free post-launch support for bug fixes. After that, we offer monthly retainer plans for ongoing feature development, maintenance, and scaling support.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d3">
+      <div class="faq-question">What does your pricing look like?<div class="faq-toggle">+</div></div>
+      <div class="faq-answer"><div class="faq-answer-inner">We typically work on fixed-price projects based on a well-defined scope. MVPs usually start around ₹5–10L, while full products range from ₹15–50L+ depending on complexity. We'll provide a detailed, no-surprise quote after our discovery call.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="light-to-dark"></div>
+<footer>
+  <div class="footer-top">
+    <div><a href="index.html" class="nav-logo" style="font-size:1.8rem;color:var(--dark-text);">Logix<span>Canvas</span></a><p class="footer-brand-desc">A premium digital agency crafting exceptional apps and websites. From India to the world — one masterpiece at a time.</p></div>
+    <div class="footer-col"><h4>Services</h4><a href="index.html#services">Mobile Development</a><a href="index.html#services">Web Applications</a><a href="index.html#services">UI/UX Design</a><a href="index.html#services">Backend & APIs</a><a href="index.html#services">Cloud & DevOps</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="index.html#process">Our Process</a><a href="careers.html">Careers</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Connect</h4><a href="mailto:hello@logixcanvas.com">hello@logixcanvas.com</a><a href="tel:+919876543210">+91 98765 43210</a><a href="#">LinkedIn</a><a href="#">GitHub</a><a href="#">Dribbble</a></div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2026 LogixCanvas. All rights reserved.</p><div class="footer-socials"><a href="#">in</a><a href="#">GH</a><a href="#">Dr</a><a href="#">X</a></div></div>
+</footer>
+
+<script>
+const navbar=document.getElementById('navbar'),pageHero=document.querySelector('.page-hero');
+function updateNav(){const s=window.scrollY,hb=pageHero.offsetTop+pageHero.offsetHeight,f=document.querySelector('footer'),ft=f?f.offsetTop-80:Infinity,d=s<hb-60||s>=ft;if(s>50){navbar.classList.add('scrolled');d?navbar.classList.remove('light-mode'):navbar.classList.add('light-mode');}else navbar.classList.remove('scrolled','light-mode');}
+window.addEventListener('scroll',updateNav);updateNav();
+const mt=document.getElementById('menuToggle'),nl=document.getElementById('navLinks');mt.addEventListener('click',()=>{mt.classList.toggle('open');nl.classList.toggle('open');});nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mt.classList.remove('open');nl.classList.remove('open');}));
+document.querySelectorAll('.reveal').forEach(el=>new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.08,rootMargin:'0px 0px -40px 0px'}).observe(el));
+
+// FAQ Toggle
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const wasActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!wasActive) item.classList.add('active');
+  });
+});
+
+// Form Submit
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.innerHTML = 'Sending...';
+  btn.style.opacity = '0.7';
+  setTimeout(() => {
+    btn.innerHTML = 'Message Sent ✓';
+    btn.style.background = '#22c55e';
+    btn.style.opacity = '1';
+    setTimeout(() => {
+      btn.innerHTML = 'Send Message <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>';
+      btn.style.background = '';
+      this.reset();
+    }, 3000);
+  }, 1500);
+});
+</script>
+</body>
+</html>
